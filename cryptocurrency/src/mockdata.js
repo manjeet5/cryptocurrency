@@ -1,4 +1,4 @@
-export const mockCrytocurrencyList = {
+export const mockCryptocurrencyList = {
     "data": [
         {
             "id": 1,
@@ -1016,7 +1016,7 @@ export const mockCrytocurrencyList = {
     ]
 };
 
-export const mockCrptoCurrencyWithPrice = {
+export const mockCryptocurrencyWithPrice = {
         "status": {
             "timestamp": "2020-05-17T17:46:56.326Z",
             "error_code": 0,

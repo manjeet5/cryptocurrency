@@ -4,7 +4,14 @@ import { DownOutlined } from '@ant-design/icons';
 import {connect} from "react-redux";
 import {getDropdownListDetails} from "./selectors/selectors";
 import {addCurrencyToTable} from "./actions/actionCreators";
-const DropDownList = ({dropdownList, add}) => {
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        add: addCurrencyToTable(dispatch)
+    }
+}
+const DropDownList = (props) => {
+    const {list, dropdownList, add} = props;
     const renderMenuItem = (cryptoCurrency) => {
         const {id, name} = cryptoCurrency;
         return (
@@ -14,7 +21,7 @@ const DropDownList = ({dropdownList, add}) => {
     //dispatch function should remove id from list and add list to table
     const menu = (
         <Menu onClick={(event)=>add(event.key)}>
-            {dropdownList.map(cryptoCurrency => renderMenuItem(cryptoCurrency))}
+            {list.data.map(cryptoCurrency => renderMenuItem(cryptoCurrency))}
         </Menu>
       );
     return (
@@ -26,4 +33,4 @@ const DropDownList = ({dropdownList, add}) => {
     )
 }
 
-export default connect(getDropdownListDetails, {add: addCurrencyToTable})(DropDownList);    
+export default connect(getDropdownListDetails, mapDispatchToProps)(DropDownList);    

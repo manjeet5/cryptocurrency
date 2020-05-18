@@ -1,6 +1,9 @@
+import {ADD_CURRENCY_TO_TABLE} from "../actions/actionCreators";
+
 function getCryptoCurrencies(state = {}, action) {
+  console.log(action);
     switch (action.type) {
-      case 'GET_CURRENCY_INITIAL_LOAD':
+      case ADD_CURRENCY_TO_TABLE:
         return state;
       default:
         return state

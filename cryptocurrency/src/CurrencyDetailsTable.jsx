@@ -6,7 +6,7 @@ import {getTableListDetails} from "./selectors/selectors";
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        delete: removeCurrencyFromTable
+        delete: removeCurrencyFromTable(dispatch)
     })
 }
 const CurrencyDetailsTable = (props) => {

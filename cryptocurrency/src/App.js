@@ -15,7 +15,7 @@ function App(props) {
   return (
       <div className="App">
         <DropDownList list={mockCryptocurrencyList}/>
-        <CurrencyDetailsTable list={mockCryptocurrencyWithPrice}/>
+        <CurrencyDetailsTable/>
       </div>
   );
 }

@@ -3,7 +3,8 @@ import getCryptoCurrencies from "./reducer/reducer";
 
 const initalState = {
     cryptocurrencies: {},
-    tableList: []
+    tableListIds: [],
+    dropdownListIds: []
 }
 function logger({ getState }) {
     return next => action => {

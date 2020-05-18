@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Space, Button } from 'antd';
+import { Table, Button } from 'antd';
 
 const CurrencyDetailsTable = ({list}) => {
     const list1 = Object.keys(list.data).map((currency) => {

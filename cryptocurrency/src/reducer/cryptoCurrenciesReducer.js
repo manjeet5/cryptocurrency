@@ -9,7 +9,7 @@ export const initalCryptoCurrencyState = {
   tableListIds: [],
 }
 
-function getCryptoCurrencies(state = initalCryptoCurrencyState, action) {
+function cryptoCurrenciesReducer(state = initalCryptoCurrencyState, action) {
   console.log(state);
   console.log(action);
     switch (action.type) {
@@ -57,4 +57,4 @@ const removeCurrencyFromTable = (state, id) => {
     tableListIds: state.tableListIds.filter(currencyId => currencyId!==id)
   }
 }
-export default getCryptoCurrencies;
+export default cryptoCurrenciesReducer;

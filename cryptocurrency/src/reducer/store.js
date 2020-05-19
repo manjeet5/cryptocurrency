@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import getCryptoCurrencies, {initalCryptoCurrencyState} from "./reducer";
+import cryptoCurrenciesReducer, {initalCryptoCurrencyState} from "./cryptoCurrenciesReducer";
 import error, {initialErrorState} from "./errorReducer";
 import createSagaMiddleware from 'redux-saga'
 import mySaga from "../actions/sagas";
 
-const rootReducer = combineReducers({cryptoCurrencyReducer: getCryptoCurrencies, errorReducer: error})
+const rootReducer = combineReducers({cryptoCurrenciesReducer, errorReducer: error})
 
-const initialState = {cryptoCurrencyReducer: initalCryptoCurrencyState, errorReducer: initialErrorState};
+const initialState = {cryptoCurrenciesReducer: initalCryptoCurrencyState, errorReducer: initialErrorState};
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(rootReducer, initialState, applyMiddleware(sagaMiddleware));
 

@@ -3,14 +3,27 @@ import _ from "lodash";
 // import axios from "axios";
 import {
     ADD_CRYPTO_TO_TABLE,
-    CRYPTO_LIST_FETCH_REQUEST
+    CRYPTO_LIST_FETCH_REQUEST,
+    REMOVE_CRYPTO_FROM_TABLE
 } from "./actionTypes";
-import {setError, setCryptoList, setCryptoPrices} from "./actionCreators";
+import {setError, setCryptoList, setCryptoPrices, setDropdown, removeCryptoFromDropdown, removeCryptoFromTableList, addCryptoToDropdown} from "./actionCreators";
 import axios from "axios";
 import {cryptoPricesApi, cryptoCurrenciesApi} from "../mock/mockEndpoints";
 
 const getPriceDetailUrl = (cryptoIds) => {
     return `https://www.stackadapt.com/coinmarketcap/quotes?id=${cryptoIds.toString()}`;
+}
+
+function* addCryptToTable(action) {
+    const {payload} = action;
+    yield call(fetchCryptoCurrenciesPrices, action)
+    yield put(removeCryptoFromDropdown(payload));
+}
+
+function* removeCryptoFromTableSaga(action) {
+    const {payload} = action;
+    yield put(removeCryptoFromTableList(payload));
+    yield put(addCryptoToDropdown(payload));
 }
 function* fetchCryptoCurrenciesPrices(action, cryptoCurrencies) {
     console.log("cryptoCurrencies", cryptoCurrencies);
@@ -50,6 +63,7 @@ function* fetchCryptoCurrencies(action) {
             yield put(setError(status.error_message));
         } else {
             yield put(setCryptoList(data));
+            yield put(setDropdown(data));
 
             yield call(fetchCryptoCurrenciesPrices, action, data)
         }
@@ -62,7 +76,8 @@ function* fetchCryptoCurrencies(action) {
 
  function* mySaga() {
     yield takeLatest(CRYPTO_LIST_FETCH_REQUEST, fetchCryptoCurrencies);
-    yield takeEvery(ADD_CRYPTO_TO_TABLE, fetchCryptoCurrenciesPrices)
+    yield takeEvery(ADD_CRYPTO_TO_TABLE, addCryptToTable);
+    yield takeEvery(REMOVE_CRYPTO_FROM_TABLE, removeCryptoFromTableSaga)
   }
 
  export default mySaga;

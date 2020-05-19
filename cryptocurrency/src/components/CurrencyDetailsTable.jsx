@@ -1,12 +1,13 @@
 import React from "react";
 import { Table, Button } from 'antd';
 import {connect} from "react-redux";
-import {removeCurrencyFromTable} from "../actions/actionCreators";
+import {removeCryptoFromTable} from "../actions/actionCreators";
 import {getTableListDetails} from "../selectors/selectors";
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        delete: removeCurrencyFromTable(dispatch)
+        // delete: removeCurrencyFromTable(dispatch)
+        dispatch
     })
 }
 const CurrencyDetailsTable = (props) => {
@@ -42,7 +43,7 @@ const CurrencyDetailsTable = (props) => {
           title: 'Action',
           key: 'action',
           render: (record) => (
-            <Button onClick={() => props.delete(record.id)} disabled={props.tableList.length < 2}>Delete</Button>
+            <Button onClick={() => props.dispatch(removeCryptoFromTable(record.id))} disabled={props.tableList.length < 2}>Delete</Button>
           ),
         },
       ];

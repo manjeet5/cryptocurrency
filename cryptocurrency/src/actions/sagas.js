@@ -1,58 +1,44 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
     ADD_CRYPTO_TO_TABLE,
-    CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED,
-    CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED,
     CRYPTO_LIST_FETCH_REQUEST
 } from "./actionTypes";
 import {setError, setCryptoList, setCryptoPrices} from "./actionCreators";
 import _ from "lodash";
-import {mockCryptocurrencyList, mockCryptocurrencyWithPrice} from "../mockdata";
-const getCryptoCurrencies = (cb) => {
-    setTimeout(() => {
-        return cb(mockCryptocurrencyList)
-    });
-}
+import {cryptoPricesApi, cryptoCurrenciesApi} from "../mock/mockEndpoints";
 
-function getCryptoPrices(cb) {
-    setTimeout(() => {
-        return cb(mockCryptocurrencyWithPrice)
-    });
-}
-
-const getPriceDetailUrl = (currencyIds) => {
-    return `https://www.stackadapt.com/coinmarketcap/quotes?id=${currencyIds.toString()}`;
+const getPriceDetailUrl = (cryptoIds) => {
+    return `https://www.stackadapt.com/coinmarketcap/quotes?id=${cryptoIds.toString()}`;
 }
 function* fetchCryptoCurrenciesPrices(action, cryptoCurrencies) {
-    console.log(action);
-    const {payload} = action;
-    const promise2 = new Promise((resolve) => {
-        getCryptoPrices(resolve)
-    })
-    const getPriceForCurrencyIds = action.payload.initialLoad ? _.map(cryptoCurrencies, "id").slice(0,5) : [payload.id]
-    const priceDetailUrl = getPriceDetailUrl(getPriceForCurrencyIds);
-    const cryptoWithPrice = yield call(() => promise2, priceDetailUrl);
-    const {status, data} = cryptoWithPrice;
-    if(status.error_message) {
-        yield put(setError(status.error_message));
-    } else {
-        yield put(setCryptoPrices(data));
+    try {
+        const {payload} = action;
+        const cryptoList = payload.initialLoad ? _.map(cryptoCurrencies, "id").slice(0,5) : [payload.id]
+        if(cryptoList.length) {
+            const priceDetailUrl = getPriceDetailUrl(cryptoList);
+            const  {status, data} = yield call(cryptoPricesApi, priceDetailUrl);
+            if(status.error_message) {
+                yield put(setError(status.error_message));
+            } else {
+                yield put(setCryptoPrices(data));
+            }
+        } else {
+            yield put(setError("no crypto id provided"));
+        }
+    } catch(error) {
+        yield put(setError(error.message));
     }
-   
+    
 }
 function* fetchCryptoCurrencies(action) {
     try {
-        const promise1 = new Promise((resolve) => {
-            getCryptoCurrencies(resolve);
-        });
-        const cryptoCurrencies = yield call(() => promise1);
-        const {status, data} = cryptoCurrencies;
+        const {status, data} = yield call(cryptoCurrenciesApi);
         if(status.error_message) {
             yield put(setError(status.error_message));
         }
         yield put(setCryptoList(data));
         
-        yield call(fetchCryptoCurrenciesPrices, action, cryptoCurrencies)
+        yield call(fetchCryptoCurrenciesPrices, action, data)
     } catch (error) {
         yield put(setError(error.message));
     }

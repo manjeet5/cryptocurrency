@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
+import {useDispatch} from "react-redux";
 import './App.css';
 import 'antd/dist/antd.css'
 import DropDownList from "./components/DropdownList.jsx";
 import CurrencyDetailsTable from "./components/CurrencyDetailsTable";
-import {connect} from "react-redux";
 import ErrorNotification from "./components/ErrorNotification";
 import {getCryptoList} from "./actions/actionCreators";
 function App(props) {
+  const dispatch = useDispatch();
   useEffect(() => {
-    props.dispatch(getCryptoList());
+    dispatch(getCryptoList());
   })
   return (
       <div className="App">
@@ -19,4 +20,4 @@ function App(props) {
   );
 }
 
-export default connect()(App);
+export default App;

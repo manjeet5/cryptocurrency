@@ -22,8 +22,8 @@ export const setCryptoPrices = (data) => ({
     type: CRYPTO_PRICE_FETCH_SUCCESS, payload: {data}
 })
 
-export const setDropdown = (data) => ({
-    type: DROPDOWN_CONTENT_CREATE, payload: {data}
+export const setDropdown = (payload) => ({
+    type: DROPDOWN_CONTENT_CREATE, payload
 });
 
 export const removeCryptoFromDropdown = (payload) => ({

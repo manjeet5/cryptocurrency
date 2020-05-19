@@ -25,12 +25,12 @@ function* removeCryptoFromTableSaga(action) {
     yield put(removeCryptoFromTableList(payload));
     yield put(addCryptoToDropdown(payload));
 }
-function* fetchCryptoCurrenciesPrices(action, cryptoCurrencies) {
-    console.log("cryptoCurrencies", cryptoCurrencies);
+function* fetchCryptoCurrenciesPrices(action, inititalTableRenderList) {
+    console.log("cryptoCurrencies", inititalTableRenderList);
 
     try {
         const {payload} = action;
-        const cryptoList = payload.initialLoad ? _.map(cryptoCurrencies, "id").slice(0,5) : [payload.id]
+        const cryptoList = inititalTableRenderList || [payload.id]
         if(cryptoList.length) {
             // const priceDetailUrl = getPriceDetailUrl(cryptoList);
             const urlOptions = {
@@ -63,9 +63,10 @@ function* fetchCryptoCurrencies(action) {
             yield put(setError(status.error_message));
         } else {
             yield put(setCryptoList(data));
-            yield put(setDropdown(data));
+            const inititalTableRenderList = _.map(data, "id").slice(0,5);
+            yield put(setDropdown({data, inititalTableRenderList}));
 
-            yield call(fetchCryptoCurrenciesPrices, action, data)
+            yield call(fetchCryptoCurrenciesPrices, action, inititalTableRenderList)
         }
         
        

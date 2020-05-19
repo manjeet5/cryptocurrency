@@ -15,20 +15,21 @@ export const initalCryptoCurrencyState = {
 
 function cryptoCurrenciesReducer(state = initalCryptoCurrencyState, action) {
   console.log(state);
+  const {payload} = action
   console.log(action);
     switch (action.type) {
       case REMOVE_CRYPTO_FROM_DROPDOWN:
-        return removeCryptoFromDropdown(state, action.payload.id);
+        return removeCryptoFromDropdown(state, payload.id);
       case ADD_CRYPTO_TO_DROPDOWN:
-        return addCryptoToDropdown(state, action.payload.id);
+        return addCryptoToDropdown(state, payload.id);
       case REMOVE_CRYPTO_FROM_TABLE_LIST:
-        return removeCurrencyFromTable(state, action.payload.id);
+        return removeCurrencyFromTable(state, payload.id);
       case CRYPTO_LIST_FETCH_SUCCESS:
-        return processCryptoCurrenciesList(state, action.payload.data)
+        return processCryptoCurrenciesList(state, payload.data)
       case CRYPTO_PRICE_FETCH_SUCCESS:
-        return updateCryptoPrices(state, action.payload.data);
+        return updateCryptoPrices(state, payload.data);
       case DROPDOWN_CONTENT_CREATE:
-        return createDropDown(state, action.payload.data)
+        return createDropDown(state, payload.data, payload.inititalTableRenderList)
       default:
         return state
     }
@@ -48,15 +49,16 @@ const processCryptoCurrenciesList = (state, list) => {
   }
 }
 
-const createDropDown = (state, list) => {
+const createDropDown = (state, list, inititalTableRenderList) => {
   console.log(state);
   const dropdown = list.reduce((dropdown, currency) => {
     const {name, id} = currency;
     const categoryName  = name[0].toUpperCase();
     const categoryList = dropdown[categoryName] || [];
+    const newCategoryList = inititalTableRenderList.includes(id) ? categoryList: [...categoryList, {name, id: id.toString()}];
     return {
       ...dropdown,
-      [categoryName]: [...categoryList, {name, id: id.toString()}]
+      [categoryName]: newCategoryList
     };
   }, {})
   return {
@@ -89,7 +91,6 @@ const addCryptoToDropdown = (state, id) => {
     ...state.dropdown,
     [category]: [...state.dropdown[category], {name, id}]
   };
-
   return {
     ...state,
     dropdown

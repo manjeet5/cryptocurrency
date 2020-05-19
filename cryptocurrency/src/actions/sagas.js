@@ -2,9 +2,7 @@ import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
     ADD_CURRENCY_TO_TABLE,
     CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED,
-    CRYPTO_CURRENCY_LIST_FETCH_FAILED,
     CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED,
-    CRYPTO_CURRENCY_PRICE_FETCH_FAILED,
     CRYPTO_CURRENCY_LIST_FETCH_REQUESTED
 } from "./actionTypes";
 import {setError} from "./actionCreators";
@@ -48,11 +46,15 @@ function* fetchCryptoCurrencies(action) {
             getCryptoCurrencies(resolve);
         });
         const cryptoCurrencies = yield call(() => promise1);
-        yield put({type: CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED, payload: {data: cryptoCurrencies.data}});
+        const {status, data} = cryptoCurrencies;
+        if(status.error_message) {
+            yield put(setError(status.error_message));
+        }
+        yield put({type: CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED, payload: {data}});
         
         yield call(fetchCryptoCurrenciesPrices, action, cryptoCurrencies)
     } catch (error) {
-       yield put({type: CRYPTO_CURRENCY_LIST_FETCH_FAILED, payload: {error: error.message}});
+        yield put(setError(error.message));
     }
  }
 

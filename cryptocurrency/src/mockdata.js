@@ -1,4 +1,5 @@
 export const mockCryptocurrencyList = {
+    "status": {},
     "data": [
         {
             "id": 1,

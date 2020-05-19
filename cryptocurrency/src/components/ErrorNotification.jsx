@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {hideError} from "../actions/actionCreators";
+import { Alert } from 'antd';
+
 const ErrorNotification = (props) => {
  const isOpen = useSelector(state => state.errorReducer.isOpen);
  const error = useSelector(state => state.errorReducer.error);
@@ -10,16 +12,6 @@ const ErrorNotification = (props) => {
  dispatch(hideError());
  }
  
- return (
- <>
- {isOpen && error && (
- <div className="fancy-error-class">
- <button onClick={handleClose}>Close Error</button>
- <span>{error}</span>
- </div>
- )}
- </>
- )
+ return isOpen && error && <Alert message={error} type="error" onClose={handleClose}/>
 }
-
 export default ErrorNotification;

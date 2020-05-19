@@ -1,9 +1,7 @@
 import {
   ADD_CURRENCY_TO_TABLE,
   CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED,
-  CRYPTO_CURRENCY_LIST_FETCH_FAILED,
   CRYPTO_CURRENCY_LIST_FETCH_REQUESTED,
-  CRYPTO_CURRENCY_PRICE_FETCH_FAILED,
   CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED,
   REMOVE_CURRENCY_FROM_TABLE
 } from "../actions/actionTypes";
@@ -16,8 +14,6 @@ export const initalCryptoCurrencyState = {
 function getCryptoCurrencies(state = initalCryptoCurrencyState, action) {
   console.log(action);
     switch (action.type) {
-      case ADD_CURRENCY_TO_TABLE:
-        return state;
       case REMOVE_CURRENCY_FROM_TABLE:
         return removeCurrencyFromTable(state, action.payload.id);
       case CRYPTO_CURRENCY_LIST_FETCH_REQUESTED: 
@@ -27,14 +23,7 @@ function getCryptoCurrencies(state = initalCryptoCurrencyState, action) {
         }
       case CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED:
         return updateCryptoCurrenciesList(state, action.payload.data)
-      case CRYPTO_CURRENCY_LIST_FETCH_FAILED:
-        console.log("show error")
-        return state;
-      case CRYPTO_CURRENCY_PRICE_FETCH_FAILED:
-        console.log("price fetch failed");
-        return state;
       case CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED:
-        console.log("price fetch passed");
         return updateCryptoPrices(state, action.payload.data);
       default:
         return state

@@ -8,7 +8,7 @@ export const CRYPTO_CURRENCY_LIST_FETCH_FAILED = "crypto_currency_list_fetch_fai
 export const CRYPTO_CURRENCY_PRICE_FETCH_FAILED = "crypto_currency_price_fetch_failed";
 
 export const removeCurrencyFromTable = (dispatch) => {
-    return (id) => dispatch({type: REMOVE_CURRENCY_FROM_TABLE, id})
+    return (id) => dispatch({type: REMOVE_CURRENCY_FROM_TABLE, payload: {id}})
 };
 
 export const addCurrencyToTable = (dispatch) => {

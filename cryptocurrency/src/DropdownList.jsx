@@ -14,6 +14,7 @@ const DropDownList = (props) => {
     const {dropdownList, add} = props;
     const renderMenuItem = (cryptoCurrency) => {
         const {id, name} = cryptoCurrency;
+        console.log(id);
         return (
             <Menu.Item key={id}>{name}</Menu.Item>
         );

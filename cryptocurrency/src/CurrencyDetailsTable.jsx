@@ -10,20 +10,6 @@ const mapDispatchToProps = (dispatch) => {
     })
 }
 const CurrencyDetailsTable = (props) => {
-    console.log("PROPS", props);
-    // const list1 = Object.keys(list.data).map((currency) => {
-    //     console.log(list.data[currency]);
-    //     return Object.keys(list.data[currency]).reduce((data, key) => {
-    //         if(key === "quote") {
-    //             data.price = list.data[currency].quote.USD.price;
-    //         } else {
-    //             data[key] = list.data[currency][key];
-    //         }
-    //         return data;
-    //     }, {})
-
-    // })
-    // console.log("list1", list1);
     const columns = [
         {
           title: 'Name',

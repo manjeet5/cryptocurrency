@@ -4,7 +4,8 @@ import {
   CRYPTO_CURRENCY_LIST_FETCH_FAILED,
   CRYPTO_CURRENCY_LIST_FETCH_REQUESTED,
   CRYPTO_CURRENCY_PRICE_FETCH_FAILED,
-  CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED
+  CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED,
+  REMOVE_CURRENCY_FROM_TABLE
 } from "../actions/actionCreators";
 
 function getCryptoCurrencies(state = {}, action) {
@@ -12,6 +13,8 @@ function getCryptoCurrencies(state = {}, action) {
     switch (action.type) {
       case ADD_CURRENCY_TO_TABLE:
         return state;
+      case REMOVE_CURRENCY_FROM_TABLE:
+        return removeCurrencyFromTable(state, action.payload.id);
       case CRYPTO_CURRENCY_LIST_FETCH_REQUESTED: 
         return {
           ...state,
@@ -49,18 +52,21 @@ const updateCryptoPrices = (state, priceData) => {
   const {cryptoCurrencies, tableListIds} = state;
   const newTableListIds = Object.keys(priceData);
   const cryptoCurrenciesWithPrice = newTableListIds.reduce((withPrice,id) => {
-      withPrice[id] = Object.assign({}, cryptoCurrencies[id], {price: priceData[id].quote.USD.price}); 
+      withPrice[id] = { ...cryptoCurrencies[id], price: priceData[id].quote.USD.price}; 
       return withPrice;
   }, {});
-  console.log("cryptoCurrenciesWithPrice", cryptoCurrenciesWithPrice);
-  const updatedCryptoCurrencies = { ...cryptoCurrencies, ...cryptoCurrenciesWithPrice};
-  console.log("updatedCryptoCurrencies", updatedCryptoCurrencies);
   const result = {
     ...state,
-    cryptoCurrencies: updatedCryptoCurrencies,
+    cryptoCurrencies: { ...cryptoCurrencies, ...cryptoCurrenciesWithPrice},
     tableListIds: [...tableListIds, ...newTableListIds],
   }
-  console.log("result", result);
   return result;
+}
+
+const removeCurrencyFromTable = (state, id) => {
+  return {
+    ...state,
+    tableListIds: state.tableListIds.filter(currencyId => currencyId!==id)
+  }
 }
 export default getCryptoCurrencies;

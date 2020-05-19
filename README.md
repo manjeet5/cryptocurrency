@@ -1,6 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+##Requirements:
+1. The list of cryptoCurrencies should be acquired from "https://www.stackadapt.com/coinmarketcap/map"
+2. The list of prices for cryptocurrency should be acquired from https://www.stackadapt.com/coinmarketcap/quotes?id=[currencyId]
+3. In the initial render, the table should first 5 currency ids details with price information.
+4. The user should be able to sort by rank and price columns.
+5. The user should be able to delete currency from the table until 1 is left. The deleted currency should be added to the dropdown.
+6. The user should be able to add currency from the dropdown to the table until the table does not have 10 rows.
+7. The currency list in the dropdown should exclude the currencies shown in the table.
+
+##Design Decisions
+1. I have used ant design libraries to render the UI. This way we will not reinvent the wheel and use industry-wide best practices when designing the UI.
+2. The list of cryptocurrencies is too big to be shown as a simple dropdown. This simple dropdown approach creates performance issues as we are rendering 2000+ components to the drop-down list. I have categorized the content by the initial character used in the currency name. This has led to us rendering at max 300 elements per category. It allows the user to better navigate through the options and huge performance gain.
+3. The inbuilt capabilities of the ant table library are used to provide the user with sorting capabilities.
+4. Redux saga has been used to manage async actions. Thanks to generator functions, we can write asynchronous code, in a synchronous manner. It has allowed me to code while keeping redux core concepts in the fore-front.
+5. If an error is caused while getting data from the backend, it is the responsibility of the backend to provide human-understandable details on the error message.
+Architecture
+ 
+<img src=“./assets/architecture.png” alt=“Architecture Overview” />
+Please note that the above diagram is high level, there is scope to go into more detail regarding how the sagas are being used.
+
+##Reflection
+1. The current approach makes the project very extensible. If we were to add new functionalities, it could be very easily added without impacting existing functionalities.  However, the content of the dropdown is not normalized correctly. That could be a problem if we were to add the functionality to rename currencies.
+2. The design decision to show categories in the dropdown list provides performance gain. But it could be improved depending on further conversations with the product manager. We could categorize based on ranks or other forms as well, to make the list smaller. This way the user could reach the currency they want to add more optimally.
+3. There are no tests for this project. This will not be acceptable in the production-grade code. But due to time constraints, I will leave this topic for now.
+4. The loading states are not captured in this project as well. I would have liked to create a loading reducer similar to error reducer, that would tackle all the loading states in the UI. This should improve the user experience as the user will get visual affirmation regarding their actions.
+5. The limitations to add or delete currency from the table are handled using a silent kill approach - where the buttons are disabled. We could build a centralized notification reducer to let the user know why the button is disabled.
+
+This doc is just a simple explanation of the design and architecture decisions. For more details and info, just reach out to me :-) 
+
+## Run the project locally
 
 In the project directory, you can run:
 
@@ -12,57 +40,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-git st
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

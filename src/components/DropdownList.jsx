@@ -3,12 +3,12 @@ import { Menu, Dropdown, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { getDropdownListDetails } from "../selectors/selectors";
-import { addCurrencyToTable } from "../actions/actionCreators";
+import { addCryptoToTable } from "../actions/actionCreators";
 
 const { SubMenu } = Menu;
 const mapDispatchToProps = (dispatch) => {
   return {
-    add: addCurrencyToTable(dispatch),
+    add: addCryptoToTable(dispatch),
   };
 };
 const DropDownList = (props) => {

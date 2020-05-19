@@ -4,14 +4,13 @@ import {hideError} from "../actions/actionCreators";
 import { Alert } from 'antd';
 
 const ErrorNotification = (props) => {
- const isOpen = useSelector(state => state.errorReducer.isOpen);
- const error = useSelector(state => state.errorReducer.error);
+ const {isOpen, error} = useSelector(state => state.errorReducer);
  const dispatch = useDispatch();
 
  function handleClose(){
  dispatch(hideError());
  }
  
- return isOpen && error && <Alert message={error} type="error" onClose={handleClose}/>
+ return isOpen && error && <Alert message={error} type="error" closable onClose={handleClose}/>
 }
 export default ErrorNotification;

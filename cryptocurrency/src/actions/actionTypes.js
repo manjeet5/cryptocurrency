@@ -1,8 +1,8 @@
-export const REMOVE_CURRENCY_FROM_TABLE = "remove_currency_from_table";
-export const ADD_CURRENCY_TO_TABLE = "add_currency_to_table";
-export const CRYPTO_CURRENCY_LIST_FETCH_REQUESTED = "crypto_currency_list_fetch_requested";
-export const CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED = "crypto_currency_list_fetch_succeeded";
-export const CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED = "crypto_currency_price_fetch_succeeded";
+export const REMOVE_CRYPTO_FROM_TABLE = "remove_crypto_from_table";
+export const ADD_CRYPTO_TO_TABLE = "add_crypto_to_table";
+export const CRYPTO_LIST_FETCH_REQUEST = "crypto_list_fetch_request";
+export const CRYPTO_LIST_FETCH_SUCCESS = "crypto_list_fetch_success";
+export const CRYPTO_PRICE_FETCH_SUCCESS = "crypto_price_fetch_success";
 
 export const SET_ERROR = "set_error";
 export const HIDE_ERROR = "hide_error";

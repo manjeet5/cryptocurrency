@@ -4,11 +4,11 @@ import 'antd/dist/antd.css'
 import DropDownList from "./components/DropdownList.jsx";
 import CurrencyDetailsTable from "./components/CurrencyDetailsTable";
 import {connect} from "react-redux";
-import {CRYPTO_CURRENCY_LIST_FETCH_REQUESTED} from "./actions/actionTypes";
 import ErrorNotification from "./components/ErrorNotification";
+import {getCryptoList} from "./actions/actionCreators";
 function App(props) {
   useEffect(() => {
-    props.dispatch({type: CRYPTO_CURRENCY_LIST_FETCH_REQUESTED, payload: {initialLoad: true}})
+    props.dispatch(getCryptoList());
   })
   return (
       <div className="App">

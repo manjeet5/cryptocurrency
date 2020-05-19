@@ -1021,7 +1021,7 @@ export const mockCryptocurrencyWithPrice = {
         "status": {
             "timestamp": "2020-05-17T17:46:56.326Z",
             "error_code": 0,
-            "error_message": "hope",
+            "error_message": null,
             "elapsed": 7,
             "credit_count": 1
         },

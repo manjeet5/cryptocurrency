@@ -1,11 +1,11 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import {
-    ADD_CURRENCY_TO_TABLE,
+    ADD_CRYPTO_TO_TABLE,
     CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED,
     CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED,
-    CRYPTO_CURRENCY_LIST_FETCH_REQUESTED
+    CRYPTO_LIST_FETCH_REQUEST
 } from "./actionTypes";
-import {setError} from "./actionCreators";
+import {setError, setCryptoList, setCryptoPrices} from "./actionCreators";
 import _ from "lodash";
 import {mockCryptocurrencyList, mockCryptocurrencyWithPrice} from "../mockdata";
 const getCryptoCurrencies = (cb) => {
@@ -36,7 +36,7 @@ function* fetchCryptoCurrenciesPrices(action, cryptoCurrencies) {
     if(status.error_message) {
         yield put(setError(status.error_message));
     } else {
-        yield put({type: CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED, payload: {data}});
+        yield put(setCryptoPrices(data));
     }
    
 }
@@ -50,7 +50,7 @@ function* fetchCryptoCurrencies(action) {
         if(status.error_message) {
             yield put(setError(status.error_message));
         }
-        yield put({type: CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED, payload: {data}});
+        yield put(setCryptoList(data));
         
         yield call(fetchCryptoCurrenciesPrices, action, cryptoCurrencies)
     } catch (error) {
@@ -59,8 +59,8 @@ function* fetchCryptoCurrencies(action) {
  }
 
  function* mySaga() {
-    yield takeLatest(CRYPTO_CURRENCY_LIST_FETCH_REQUESTED, fetchCryptoCurrencies);
-    yield takeEvery(ADD_CURRENCY_TO_TABLE, fetchCryptoCurrenciesPrices)
+    yield takeLatest(CRYPTO_LIST_FETCH_REQUEST, fetchCryptoCurrencies);
+    yield takeEvery(ADD_CRYPTO_TO_TABLE, fetchCryptoCurrenciesPrices)
   }
 
  export default mySaga;

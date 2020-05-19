@@ -4,8 +4,10 @@ import {
     CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED,
     CRYPTO_CURRENCY_LIST_FETCH_FAILED,
     CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED,
-    CRYPTO_CURRENCY_PRICE_FETCH_FAILED
+    CRYPTO_CURRENCY_PRICE_FETCH_FAILED,
+    CRYPTO_CURRENCY_LIST_FETCH_REQUESTED
 } from "./actions/actionCreators";
+
 import {mockCryptocurrencyList, mockCryptocurrencyWithPrice} from "./mockdata";
 const getCryptoCurrencies = (cb) => {
     setTimeout(() => {
@@ -37,7 +39,7 @@ function* fetchCryptoCurrencies(action) {
  }
 
  function* mySaga() {
-    yield takeLatest("CRYPTO_CURRENCY_FETCH_REQUESTED", fetchCryptoCurrencies);
+    yield takeLatest(CRYPTO_CURRENCY_LIST_FETCH_REQUESTED, fetchCryptoCurrencies);
   }
 
  export default mySaga;

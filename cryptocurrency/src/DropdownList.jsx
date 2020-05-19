@@ -11,7 +11,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const DropDownList = (props) => {
-    const {list, dropdownList, add} = props;
+    const {dropdownList, add} = props;
     const renderMenuItem = (cryptoCurrency) => {
         const {id, name} = cryptoCurrency;
         return (
@@ -21,7 +21,7 @@ const DropDownList = (props) => {
     //dispatch function should remove id from list and add list to table
     const menu = (
         <Menu onClick={(event)=>add(event.key)}>
-            {list.data.map(cryptoCurrency => renderMenuItem(cryptoCurrency))}
+            {dropdownList.map(cryptoCurrency => renderMenuItem(cryptoCurrency))}
         </Menu>
       );
     return (

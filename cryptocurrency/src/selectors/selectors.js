@@ -7,7 +7,6 @@ export const getTableListDetails = ({tableListIds, cryptoCurrencies}) => {
 };
 
 export const getDropdownListDetails = ({tableListIds, cryptoCurrencies}) => {
-    console.log(tableListIds);
     const dropdownList  = Object.keys(cryptoCurrencies).reduce((list, currencyId)=> {
         if(!tableListIds.includes(currencyId)) {
             list.push({
@@ -17,5 +16,5 @@ export const getDropdownListDetails = ({tableListIds, cryptoCurrencies}) => {
         }
         return list;
     },[]);
-    return {dropdownList};
+    return {dropdownList, tableListIds};
 };

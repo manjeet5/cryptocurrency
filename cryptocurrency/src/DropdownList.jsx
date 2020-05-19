@@ -11,15 +11,14 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const DropDownList = (props) => {
-    const {dropdownList, add} = props;
+    const {dropdownList, add, tableListIds} = props;
+    console.log("table:istIds", tableListIds);
     const renderMenuItem = (cryptoCurrency) => {
         const {id, name} = cryptoCurrency;
-        console.log(id);
         return (
             <Menu.Item key={id}>{name}</Menu.Item>
         );
     }
-    //dispatch function should remove id from list and add list to table
     const menu = (
         <Menu onClick={(event)=>add(event.key)}>
             {dropdownList.map(cryptoCurrency => renderMenuItem(cryptoCurrency))}
@@ -27,7 +26,7 @@ const DropDownList = (props) => {
       );
     return (
         <div className="drop-down-button">
-            <Dropdown overlay={menu} trigger={['click']} placement="bottomLeft">
+            <Dropdown overlay={menu} trigger={['click']} disabled={tableListIds.length > 10} placement="bottomLeft">
                 <Button  type="primary" >CryptoPrice <DownOutlined /></Button>
             </Dropdown>
         </div>

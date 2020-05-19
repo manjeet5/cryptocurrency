@@ -24,10 +24,13 @@ function getCryptoPrices(cb) {
 const getPriceDetailUrl = (currencyIds) => {
     return `https://www.stackadapt.com/coinmarketcap/quotes?id=${currencyIds.toString()}`;
 }
-function* fetchCryptoCurrenciesPrices(action, getPriceForCurrencyIds) {
+function* fetchCryptoCurrenciesPrices(action, cryptoCurrencies) {
+    console.log(action);
+    const {payload} = action;
     const promise2 = new Promise((resolve) => {
         getCryptoPrices(resolve)
     })
+    const getPriceForCurrencyIds = action.payload.initialLoad ? _.map(cryptoCurrencies, "id").slice(0,5) : [payload.id]
     const priceDetailUrl = getPriceDetailUrl(getPriceForCurrencyIds);
     const cryptoWithPrice = yield call(() => promise2, priceDetailUrl);
     const {status, data} = cryptoWithPrice;
@@ -46,8 +49,7 @@ function* fetchCryptoCurrencies(action) {
         const cryptoCurrencies = yield call(() => promise1);
         yield put({type: CRYPTO_CURRENCY_LIST_FETCH_SUCCEEDED, payload: {data: cryptoCurrencies.data}});
         
-        const getPriceForCurrencyIds = action.payload.initialLoad ? _.map(cryptoCurrencies, "id").slice(0,5) : [];
-        yield call(fetchCryptoCurrenciesPrices, action, getPriceForCurrencyIds)
+        yield call(fetchCryptoCurrenciesPrices, action, cryptoCurrencies)
     } catch (error) {
        yield put({type: CRYPTO_CURRENCY_LIST_FETCH_FAILED, payload: {error: error.message}});
     }
@@ -55,6 +57,7 @@ function* fetchCryptoCurrencies(action) {
 
  function* mySaga() {
     yield takeLatest(CRYPTO_CURRENCY_LIST_FETCH_REQUESTED, fetchCryptoCurrencies);
+    yield takeEvery(ADD_CURRENCY_TO_TABLE, fetchCryptoCurrenciesPrices)
   }
 
  export default mySaga;

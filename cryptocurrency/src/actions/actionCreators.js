@@ -12,5 +12,5 @@ export const removeCurrencyFromTable = (dispatch) => {
 };
 
 export const addCurrencyToTable = (dispatch) => {
-    return (id) => dispatch({type: ADD_CURRENCY_TO_TABLE, id})
+    return (id) => dispatch({type: ADD_CURRENCY_TO_TABLE, payload: {id}})
 }

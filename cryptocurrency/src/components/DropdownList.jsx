@@ -12,7 +12,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 const DropDownList = (props) => {
     const {dropdownList, add, tableListIds} = props;
-    console.log("table:istIds", tableListIds);
     const renderMenuItem = (cryptoCurrency) => {
         const {id, name} = cryptoCurrency;
         return (

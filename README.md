@@ -1,5 +1,5 @@
 
-##Requirements:
+## Requirements:
 1. The list of cryptoCurrencies should be acquired from "https://www.stackadapt.com/coinmarketcap/map"
 2. The list of prices for cryptocurrency should be acquired from https://www.stackadapt.com/coinmarketcap/quotes?id=[currencyId]
 3. In the initial render, the table should first 5 currency ids details with price information.
@@ -8,7 +8,7 @@
 6. The user should be able to add currency from the dropdown to the table until the table does not have 10 rows.
 7. The currency list in the dropdown should exclude the currencies shown in the table.
 
-##Design Decisions
+## Design Decisions
 1. I have used ant design libraries to render the UI. This way we will not reinvent the wheel and use industry-wide best practices when designing the UI.
 2. The list of cryptocurrencies is too big to be shown as a simple dropdown. This simple dropdown approach creates performance issues as we are rendering 2000+ components to the drop-down list. I have categorized the content by the initial character used in the currency name. This has led to us rendering at max 300 elements per category. It allows the user to better navigate through the options and huge performance gain.
 3. The inbuilt capabilities of the ant table library are used to provide the user with sorting capabilities.
@@ -19,7 +19,7 @@ Architecture
 <img src=“./assets/architecture.png” alt=“Architecture Overview” />
 Please note that the above diagram is high level, there is scope to go into more detail regarding how the sagas are being used.
 
-##Reflection
+## Reflection
 1. The current approach makes the project very extensible. If we were to add new functionalities, it could be very easily added without impacting existing functionalities.  However, the content of the dropdown is not normalized correctly. That could be a problem if we were to add the functionality to rename currencies.
 2. The design decision to show categories in the dropdown list provides performance gain. But it could be improved depending on further conversations with the product manager. We could categorize based on ranks or other forms as well, to make the list smaller. This way the user could reach the currency they want to add more optimally.
 3. There are no tests for this project. This will not be acceptable in the production-grade code. But due to time constraints, I will leave this topic for now.

@@ -42,7 +42,7 @@ const CurrencyDetailsTable = (props) => {
           title: 'Action',
           key: 'action',
           render: (record) => (
-            <Button onClick={() => props.delete(record.id)}>Delete</Button>
+            <Button onClick={() => props.delete(record.id)} disabled={props.tableList.length < 2}>Delete</Button>
           ),
         },
       ];

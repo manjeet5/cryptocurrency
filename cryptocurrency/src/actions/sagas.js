@@ -6,9 +6,10 @@ import {
     CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED,
     CRYPTO_CURRENCY_PRICE_FETCH_FAILED,
     CRYPTO_CURRENCY_LIST_FETCH_REQUESTED
-} from "./actions/actionCreators";
+} from "./actionTypes";
+import {setError} from "./actionCreators";
 import _ from "lodash";
-import {mockCryptocurrencyList, mockCryptocurrencyWithPrice} from "./mockdata";
+import {mockCryptocurrencyList, mockCryptocurrencyWithPrice} from "../mockdata";
 const getCryptoCurrencies = (cb) => {
     setTimeout(() => {
         return cb(mockCryptocurrencyList)
@@ -35,7 +36,7 @@ function* fetchCryptoCurrenciesPrices(action, cryptoCurrencies) {
     const cryptoWithPrice = yield call(() => promise2, priceDetailUrl);
     const {status, data} = cryptoWithPrice;
     if(status.error_message) {
-        yield put({type: CRYPTO_CURRENCY_PRICE_FETCH_FAILED, payload: {error:  status.error_message}});
+        yield put(setError(status.error_message));
     } else {
         yield put({type: CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED, payload: {data}});
     }

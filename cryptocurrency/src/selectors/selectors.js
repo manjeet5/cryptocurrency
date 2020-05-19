@@ -1,4 +1,4 @@
-export const getTableListDetails = ({tableListIds, cryptoCurrencies}) => {
+export const getTableListDetails = ({cryptoCurrencyReducer:{tableListIds, cryptoCurrencies}}) => {
     const tableList = tableListIds.reduce((list, currencyId)=> {
        list.push({...cryptoCurrencies[currencyId], id: currencyId});
        return list;
@@ -6,7 +6,7 @@ export const getTableListDetails = ({tableListIds, cryptoCurrencies}) => {
     return {tableList};
 };
 
-export const getDropdownListDetails = ({tableListIds, cryptoCurrencies}) => {
+export const getDropdownListDetails = ({cryptoCurrencyReducer:{tableListIds, cryptoCurrencies}}) => {
     const dropdownList  = Object.keys(cryptoCurrencies).reduce((list, currencyId)=> {
         if(!tableListIds.includes(currencyId)) {
             list.push({

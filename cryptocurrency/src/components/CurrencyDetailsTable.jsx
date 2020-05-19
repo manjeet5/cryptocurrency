@@ -1,8 +1,8 @@
 import React from "react";
 import { Table, Button } from 'antd';
 import {connect} from "react-redux";
-import {removeCurrencyFromTable} from "./actions/actionCreators";
-import {getTableListDetails} from "./selectors/selectors";
+import {removeCurrencyFromTable} from "../actions/actionCreators";
+import {getTableListDetails} from "../selectors/selectors";
 
 const mapDispatchToProps = (dispatch) => {
     return ({

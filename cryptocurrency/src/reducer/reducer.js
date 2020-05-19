@@ -6,9 +6,14 @@ import {
   CRYPTO_CURRENCY_PRICE_FETCH_FAILED,
   CRYPTO_CURRENCY_PRICE_FETCH_SUCCEEDED,
   REMOVE_CURRENCY_FROM_TABLE
-} from "../actions/actionCreators";
+} from "../actions/actionTypes";
 
-function getCryptoCurrencies(state = {}, action) {
+export const initalCryptoCurrencyState = {
+  cryptoCurrencies: {},
+  tableListIds: [],
+}
+
+function getCryptoCurrencies(state = initalCryptoCurrencyState, action) {
   console.log(action);
     switch (action.type) {
       case ADD_CURRENCY_TO_TABLE:

@@ -16,7 +16,7 @@
 5. If an error is caused while getting data from the backend, it is the responsibility of the backend to provide human-understandable details on the error message.
 Architecture
  
-<img src=“./assets/architecture.png” alt=“Architecture Overview” />
+<img src=“./src/assets/architecture.png” alt=“Architecture Overview” />
 Please note that the above diagram is high level, there is scope to go into more detail regarding how the sagas are being used.
 
 ## Reflection

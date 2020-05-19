@@ -7,6 +7,7 @@ import {
 export const initalCryptoCurrencyState = {
   cryptoCurrencies: {},
   tableListIds: [],
+  dropdownListIds: {}
 }
 
 function cryptoCurrenciesReducer(state = initalCryptoCurrencyState, action) {
@@ -16,7 +17,7 @@ function cryptoCurrenciesReducer(state = initalCryptoCurrencyState, action) {
       case REMOVE_CRYPTO_FROM_TABLE:
         return removeCurrencyFromTable(state, action.payload.id);
       case CRYPTO_LIST_FETCH_SUCCESS:
-        return updateCryptoCurrenciesList(state, action.payload.data)
+        return processCryptoCurrenciesList(state, action.payload.data)
       case CRYPTO_PRICE_FETCH_SUCCESS:
         return updateCryptoPrices(state, action.payload.data);
       default:
@@ -24,11 +25,13 @@ function cryptoCurrenciesReducer(state = initalCryptoCurrencyState, action) {
     }
   }
 
-const updateCryptoCurrenciesList = (state, list) => {
+const processCryptoCurrenciesList = (state, list) => {
   const cryptoCurrencies = list.reduce((cryptoCurrencies, currency) => {
     const {name, id, symbol, rank:cmc_rank} = currency;
-    cryptoCurrencies[id] = {name, symbol, cmc_rank};
-    return cryptoCurrencies
+    return {
+      ...cryptoCurrencies,
+      [id]:{name, id, symbol, cmc_rank}
+    };
   }, {})
   return {
     ...state,

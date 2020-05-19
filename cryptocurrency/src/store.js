@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import getCryptoCurrencies from "./reducer/reducer";
-
+import createSagaMiddleware from 'redux-saga'
+import mySaga from "./sagas";
 const initalState = {
     cryptocurrencies: {},
     tableListIds: [],
@@ -20,6 +21,9 @@ function logger({ getState }) {
       return returnValue
     }
   }
-const store = createStore(getCryptoCurrencies, initalState, applyMiddleware(logger));
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(getCryptoCurrencies, initalState, applyMiddleware(logger, sagaMiddleware));
+
+sagaMiddleware.run(mySaga)
 
 export default store;
